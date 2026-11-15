@@ -13,16 +13,12 @@ const uploadToCloudinary = (file: Express.Multer.File): Promise<string> =>
           return;
         }
         resolve(result.secure_url);
-      },
+      }
     );
     stream.end(file.buffer);
   });
 
-export const getProducts = async (
-  _req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const getProducts = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, products });
@@ -31,11 +27,7 @@ export const getProducts = async (
   }
 };
 
-export const createProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
+export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { error, value } = productSchema.validate(req.body, {
       abortEarly: false,

@@ -9,7 +9,7 @@ const productSchema = new Schema(
     stock: { type: Number, required: true, min: 0, default: 0 },
     image: { type: String, required: true },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export type ProductDocument = InferSchemaType<typeof productSchema>;

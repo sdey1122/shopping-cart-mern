@@ -1,8 +1,4 @@
-import express, {
-  type NextFunction,
-  type Request,
-  type Response,
-} from "express";
+import express, { type NextFunction, type Request, type Response } from "express";
 import cors from "cors";
 import productRoutes from "./routes/product.routes.js";
 
@@ -19,13 +15,10 @@ app.get("/api/health", (_req, res) => {
 app.use("/api/products", productRoutes);
 
 app.use((error: unknown, _req: Request, res: Response, _next: NextFunction) => {
-  const message =
-    error instanceof Error ? error.message : "Something went wrong";
+  const message = error instanceof Error ? error.message : "Something went wrong";
 
   if (message.toLowerCase().includes("file too large")) {
-    res
-      .status(400)
-      .json({ success: false, message: "Image must be 5 MB or smaller" });
+    res.status(400).json({ success: false, message: "Image must be 5 MB or smaller" });
     return;
   }
 
