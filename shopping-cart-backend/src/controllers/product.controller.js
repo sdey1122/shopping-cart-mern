@@ -1,9 +1,8 @@
-import type { Request, Response, NextFunction } from "express";
 import { Product } from "../models/product.model.js";
 import cloudinary from "../config/cloudinary.js";
 import { productSchema } from "../validators/product.validator.js";
 
-const uploadToCloudinary = (file: Express.Multer.File): Promise<string> =>
+const uploadToCloudinary = (file) =>
   new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
       { folder: "shopping-cart/products", resource_type: "image" },
@@ -18,7 +17,7 @@ const uploadToCloudinary = (file: Express.Multer.File): Promise<string> =>
     stream.end(file.buffer);
   });
 
-export const getProducts = async (_req: Request, res: Response, next: NextFunction) => {
+export const getProducts = async (_req, res, next) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
     res.status(200).json({ success: true, products });
@@ -27,7 +26,7 @@ export const getProducts = async (_req: Request, res: Response, next: NextFuncti
   }
 };
 
-export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
+export const createProduct = async (req, res, next) => {
   try {
     const { error, value } = productSchema.validate(req.body, {
       abortEarly: false,

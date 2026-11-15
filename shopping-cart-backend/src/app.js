@@ -1,8 +1,4 @@
-import express, {
-  type NextFunction,
-  type Request,
-  type Response,
-} from "express";
+import express from "express";
 import cors from "cors";
 import productRoutes from "./routes/product.routes.js";
 
@@ -20,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Root route
-app.get("/", (_req: Request, res: Response) => {
+app.get("/", (_req, res) => {
   res.status(200).json({
     success: true,
     message: "Shopping Cart Backend API is running!",
@@ -28,7 +24,7 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 // Health check
-app.get("/api/health", (_req: Request, res: Response) => {
+app.get("/api/health", (_req, res) => {
   res.status(200).json({
     success: true,
     message: "Shopping Cart API is running",
@@ -39,7 +35,7 @@ app.get("/api/health", (_req: Request, res: Response) => {
 app.use("/api/products", productRoutes);
 
 // Global error handler
-app.use((error: unknown, _req: Request, res: Response, _next: NextFunction) => {
+app.use((error, _req, res, _next) => {
   console.error("Backend error:", error);
 
   const message =
